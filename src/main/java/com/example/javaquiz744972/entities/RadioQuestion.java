@@ -15,4 +15,28 @@ public class RadioQuestion extends Question {
         this.choices = choices;
         this.answer = answer;
     }
+
+    public String getChoiceOrder() {
+        return choiceOrder;
+    }
+
+    public void setChoiceOrder(String choiceOrder) {
+        this.choiceOrder = choiceOrder;
+    }
+
+    public List<String> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(List<String> choices) {
+        this.choices = choices;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 }

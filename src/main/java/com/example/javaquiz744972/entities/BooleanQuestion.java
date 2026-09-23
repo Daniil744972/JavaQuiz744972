@@ -14,6 +14,30 @@ private boolean correctAnswer;
         this.labaelFalse = labaelFalse;
         this.correctAnswer = correctAnswer;
     }
+
+    public String getLabaelTrue() {
+        return labaelTrue;
+    }
+
+    public void setLabaelTrue(String labaelTrue) {
+        this.labaelTrue = labaelTrue;
+    }
+
+    public String getLabaelFalse() {
+        return labaelFalse;
+    }
+
+    public void setLabaelFalse(String labaelFalse) {
+        this.labaelFalse = labaelFalse;
+    }
+
+    public boolean isCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(boolean correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
 }
 
 
