@@ -1,6 +1,5 @@
 package com.example.javaquiz744972;
 
-import com.example.javaquiz744972.entities.Page;
 import com.example.javaquiz744972.entities.Quiz;
 import tools.jackson.databind.ObjectMapper;
 
