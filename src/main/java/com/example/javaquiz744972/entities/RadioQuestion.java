@@ -1,7 +1,9 @@
 package com.example.javaquiz744972.entities;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import java.util.List;
+@JsonTypeName("radiogroup")
 public class RadioQuestion extends Question {
  private String choiceOrder;
  private List<String> choices;

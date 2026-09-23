@@ -1,5 +1,8 @@
 package com.example.javaquiz744972.entities;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName("boolean")
 public class BooleanQuestion extends  Question {
 private String labaelTrue;
 private String labaelFalse;
