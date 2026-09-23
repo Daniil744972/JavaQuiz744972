@@ -1,11 +1,22 @@
 package com.example.javaquiz744972.entities;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
         property = "type"
 )
+@JsonSubTypes({
+        @JsonSubTypes.Type(
+                value = RadioQuestion.class,
+                name = "radiogroup"
+        ),
+        @JsonSubTypes.Type(
+                value = BooleanQuestion.class,
+                name = "boolean"
+        )
+})
 public abstract class Question {
     private String name;
     private QuestionType type;

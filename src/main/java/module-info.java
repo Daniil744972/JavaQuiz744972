@@ -9,5 +9,7 @@ module com.example.javaquiz744972 {
     requires java.logging;
 
     opens com.example.javaquiz744972 to javafx.fxml;
+    opens com.example.javaquiz744972.entities to
+            tools.jackson.databind;
     exports com.example.javaquiz744972;
 }

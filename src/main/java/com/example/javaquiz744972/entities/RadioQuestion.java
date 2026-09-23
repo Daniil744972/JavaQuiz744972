@@ -3,17 +3,16 @@ package com.example.javaquiz744972.entities;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import java.util.List;
-@JsonTypeName("radiogroup")
 public class RadioQuestion extends Question {
  private String choiceOrder;
  private List<String> choices;
- private String answer;
+ private String correctAnswer;
 
     public RadioQuestion(String name, QuestionType type, String title, boolean isRequired, String choiceOrder, List<String> choices, String answer) {
         super(name, type, title, isRequired);
         this.choiceOrder = choiceOrder;
         this.choices = choices;
-        this.answer = answer;
+        this.correctAnswer = answer;
     }
 
     public RadioQuestion() {}
@@ -34,11 +33,11 @@ public class RadioQuestion extends Question {
         this.choices = choices;
     }
 
-    public String getAnswer() {
-        return answer;
+    public String getCorrectAnswer() {
+        return correctAnswer;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
     }
 }

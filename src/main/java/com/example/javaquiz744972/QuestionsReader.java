@@ -22,10 +22,11 @@ public class QuestionsReader {
             return;
         }
         File selectedFile = new File(fd.getDirectory(), fd.getFile());
-        Quiz quis = mapper.readValue(selectedFile, Quiz.class);
+        Quiz quiz = mapper.readValue(selectedFile, Quiz.class);
 
-        for (Page page : quis.getPages()) {
-            logger.info(page.getQuestion().getName());
+        for (Page page : quiz.getPages()) {
+            logger.info(String.valueOf(page.getTimeLimit()));
+            logger.info(String.valueOf(page.getElements().size()));
         }
     }
 }

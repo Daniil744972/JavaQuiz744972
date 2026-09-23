@@ -1,14 +1,16 @@
 package com.example.javaquiz744972.entities;
 
+import java.util.List;
+
 public class Page {
     private int timeLimit;
-    private Question question;
+    private List<Question> elements;
 
     public Page(){}
 
-    public Page(int timeLimit, Question question) {
+    public Page(int timeLimit, List<Question> questions) {
         this.timeLimit = timeLimit;
-        this.question = question;
+        this.elements = questions;
     }
 
     public int getTimeLimit() {
@@ -19,11 +21,11 @@ public class Page {
         this.timeLimit = timeLimit;
     }
 
-    public Question getQuestion() {
-        return question;
+    public List<Question> getElements() {
+        return elements;
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
+    public void setElements(List<Question> elements) {
+        this.elements = elements;
     }
 }
