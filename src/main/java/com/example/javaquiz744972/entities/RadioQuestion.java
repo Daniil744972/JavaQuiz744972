@@ -6,4 +6,11 @@ public class RadioQuestion extends Question {
  private String choiceOrder;
  private List<String> choices;
  private String answer;
+
+    public RadioQuestion(String name, QuestionType type, String title, boolean isRequired, String choiceOrder, List<String> choices, String answer) {
+        super(name, type, title, isRequired);
+        this.choiceOrder = choiceOrder;
+        this.choices = choices;
+        this.answer = answer;
+    }
 }

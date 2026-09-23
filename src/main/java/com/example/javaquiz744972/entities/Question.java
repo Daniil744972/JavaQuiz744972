@@ -6,4 +6,10 @@ public abstract class Question {
     private String title;
     private boolean isRequired;
 
+    public Question(String name, QuestionType type, String title, boolean isRequired) {
+        this.name = name;
+        this.type = type;
+        this.title = title;
+        this.isRequired = isRequired;
+    }
 }
