@@ -14,19 +14,16 @@ public class QuestionsReader {
     private final ObjectMapper mapper = new ObjectMapper();
     private Logger logger = Logger.getLogger(QuestionsReader.class.getName());
 
-    public void ReadQuiz() throws FileNotFoundException {
+    public Quiz ReadQuiz() throws FileNotFoundException {
         FileDialog fd = new FileDialog(new JFrame(), "Select Questions", FileDialog.LOAD);
         fd.setFile("*.json");
         fd.setVisible(true);
         if(fd.getFile() == null && !fd.getFile().equals("")) {
-            return;
+            return null;
         }
         File selectedFile = new File(fd.getDirectory(), fd.getFile());
         Quiz quiz = mapper.readValue(selectedFile, Quiz.class);
 
-        for (Page page : quiz.getPages()) {
-            logger.info(String.valueOf(page.getTimeLimit()));
-            logger.info(String.valueOf(page.getElements().size()));
-        }
+        return quiz;
     }
 }
