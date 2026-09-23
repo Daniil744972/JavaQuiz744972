@@ -16,6 +16,8 @@ public class RadioQuestion extends Question {
         this.answer = answer;
     }
 
+    public RadioQuestion() {}
+
     public String getChoiceOrder() {
         return choiceOrder;
     }

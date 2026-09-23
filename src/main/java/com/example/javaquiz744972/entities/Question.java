@@ -18,6 +18,8 @@ public abstract class Question {
         this.isRequired = isRequired;
     }
 
+    public Question() {}
+
     public String getName() {
         return name;
     }

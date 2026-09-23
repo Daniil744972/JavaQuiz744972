@@ -15,6 +15,8 @@ private boolean correctAnswer;
         this.correctAnswer = correctAnswer;
     }
 
+    public BooleanQuestion() {}
+
     public String getLabaelTrue() {
         return labaelTrue;
     }

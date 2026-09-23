@@ -14,6 +14,7 @@ public class Quiz {
         this.description = description;
         this.pages = pages;
     }
+    public Quiz() {}
 
     public String getQuizId() {
         return quizId;

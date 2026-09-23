@@ -4,6 +4,8 @@ public class Page {
     private int timeLimit;
     private Question question;
 
+    public Page(){}
+
     public Page(int timeLimit, Question question) {
         this.timeLimit = timeLimit;
         this.question = question;
