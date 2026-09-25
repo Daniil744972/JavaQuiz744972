@@ -12,30 +12,17 @@
       spacing="20.0"
       xmlns="http://javafx.com/javafx/26"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.javaquiz744972.QuizController">
+      fx:controller="com.example.javaquiz744972.controllers.QuizController"
+      fx:id="mainbox">
 
     <children>
-
-        <Label fx:id="quizName"
-               text="Quiz Name"
-               textAlignment="CENTER">
-            <font>
-                <Font size="36.0"/>
-            </font>
-        </Label>
-
-        <Label fx:id="description"
-               text="Description"
-               textAlignment="CENTER"
-               wrapText="true">
+        <Label text="Welcome to the Quizavr">
             <font>
                 <Font size="24.0"/>
             </font>
         </Label>
 
-        <Button text="Next"
-                onAction="#openQuestion"/>
-
+        <Button text="Upload your Quiz" onAction="#loadQuiz"/>
     </children>
 
 </VBox>

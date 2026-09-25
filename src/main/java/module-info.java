@@ -7,9 +7,12 @@ module com.example.javaquiz744972 {
     requires tools.jackson.databind;
     requires java.desktop;
     requires java.logging;
+    requires javafx.base;
 
     opens com.example.javaquiz744972 to javafx.fxml;
     opens com.example.javaquiz744972.entities to
             tools.jackson.databind;
     exports com.example.javaquiz744972;
+    exports com.example.javaquiz744972.controllers;
+    opens com.example.javaquiz744972.controllers to javafx.fxml;
 }

@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
-        property = "type"
+        property = "type",
+        visible = true
 )
 @JsonSubTypes({
         @JsonSubTypes.Type(
@@ -19,10 +20,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 })
 public abstract class Question {
     private String name;
-    private QuestionType type;
+    private String type;
     private String title;
     private boolean isRequired;
-    public Question(String name, QuestionType type, String title, boolean isRequired) {
+    public Question(String name, String type, String title, boolean isRequired) {
         this.name = name;
         this.type = type;
         this.title = title;
@@ -39,11 +40,11 @@ public abstract class Question {
         this.name = name;
     }
 
-    public QuestionType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(QuestionType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -61,5 +62,15 @@ public abstract class Question {
 
     public void setRequired(boolean required) {
         isRequired = required;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                ", title='" + title + '\'' +
+                ", isRequired=" + isRequired +
+                '}';
     }
 }

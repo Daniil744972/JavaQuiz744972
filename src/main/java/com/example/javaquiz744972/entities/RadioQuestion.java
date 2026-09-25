@@ -8,14 +8,15 @@ public class RadioQuestion extends Question {
  private List<String> choices;
  private String correctAnswer;
 
-    public RadioQuestion(String name, QuestionType type, String title, boolean isRequired, String choiceOrder, List<String> choices, String answer) {
+    public RadioQuestion(String name, String type, String title, boolean isRequired, String choiceOrder, List<String> choices, String answer) {
         super(name, type, title, isRequired);
         this.choiceOrder = choiceOrder;
         this.choices = choices;
         this.correctAnswer = answer;
     }
 
-    public RadioQuestion() {}
+    public RadioQuestion() {
+    }
 
     public String getChoiceOrder() {
         return choiceOrder;

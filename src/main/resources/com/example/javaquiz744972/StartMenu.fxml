@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<VBox xmlns="http://javafx.com/javafx/26"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.javaquiz744972.controllers.StartMenuController"
+      alignment="CENTER"
+      prefHeight="400.0"
+      prefWidth="600.0"
+      fx:id="contentBox">
+<children>
+
+    <Label fx:id="quizName"
+           text="Quiz Name"
+           textAlignment="CENTER">
+        <font>
+            <Font size="36.0"/>
+        </font>
+    </Label>
+
+    <Label fx:id="description"
+           text="Description"
+           textAlignment="CENTER"
+           wrapText="true">
+        <font>
+            <Font size="24.0"/>
+        </font>
+    </Label>
+
+    <Button text="Next"
+            onAction="#nextQuestion"/>
+
+</children>
+
+</VBox>

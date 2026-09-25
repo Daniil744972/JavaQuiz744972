@@ -76,7 +76,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.javaquiz744972/com.example.javaquiz744972.QuizController
+                            <mainClass>com.example.javaquiz744972/com.example.javaquiz744972.controllers.QuizController
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

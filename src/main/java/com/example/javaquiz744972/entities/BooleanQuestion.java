@@ -4,33 +4,34 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("boolean")
 public class BooleanQuestion extends  Question {
-private String labaelTrue;
-private String labaelFalse;
+private String labelTrue;
+private String labelFalse;
 private boolean correctAnswer;
 
-    public BooleanQuestion(String name, QuestionType type, String title, boolean isRequired, String labaelTrue, String labaelFalse, boolean correctAnswer) {
+    public BooleanQuestion(String name, String type, String title, boolean isRequired, String labaelTrue, String labaelFalse, boolean correctAnswer) {
         super(name, type, title, isRequired);
-        this.labaelTrue = labaelTrue;
-        this.labaelFalse = labaelFalse;
+        this.labelTrue = labaelTrue;
+        this.labelFalse = labaelFalse;
         this.correctAnswer = correctAnswer;
     }
 
-    public BooleanQuestion() {}
-
-    public String getLabaelTrue() {
-        return labaelTrue;
+    public BooleanQuestion() {
     }
 
-    public void setLabaelTrue(String labaelTrue) {
-        this.labaelTrue = labaelTrue;
+    public String getLabelTrue() {
+        return labelTrue;
     }
 
-    public String getLabaelFalse() {
-        return labaelFalse;
+    public void setLabelTrue(String labelTrue) {
+        this.labelTrue = labelTrue;
     }
 
-    public void setLabaelFalse(String labaelFalse) {
-        this.labaelFalse = labaelFalse;
+    public String getLabelFalse() {
+        return labelFalse;
+    }
+
+    public void setLabelFalse(String labelFalse) {
+        this.labelFalse = labelFalse;
     }
 
     public boolean isCorrectAnswer() {
