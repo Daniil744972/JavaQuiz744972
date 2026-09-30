@@ -33,6 +33,11 @@
         </font>
     </Label>
 
+    <VBox fx:id="questionBox"
+          alignment="CENTER_LEFT"
+          spacing="10.0"
+          maxWidth="400.0" />
+
     <Button text="Next"
             onAction="#nextQuestion"/>
 
