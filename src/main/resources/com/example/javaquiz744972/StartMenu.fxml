@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <VBox xmlns="http://javafx.com/javafx/26"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.javaquiz744972.controllers.StartMenuController"
+      fx:controller="com.example.javaquiz744972.controllers.QuestionController"
       alignment="CENTER"
       prefHeight="400.0"
       prefWidth="600.0"

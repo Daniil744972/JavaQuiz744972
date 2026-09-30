@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 
-public class StartMenuController {
+public class QuestionController {
 
     @FXML
     private Label quizName;

@@ -5,10 +5,8 @@ import com.example.javaquiz744972.entities.Quiz;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class QuizController {
@@ -25,8 +23,8 @@ public class QuizController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/javaquiz744972/StartMenu.fxml"));
         VBox startMenu = fxmlLoader.load();
 
-        StartMenuController startMenuController = fxmlLoader.getController();
-        startMenuController.setQuiz(quiz);
+        QuestionController questionController = fxmlLoader.getController();
+        questionController.setQuiz(quiz);
 
         mainbox.getChildren().clear();
         mainbox.getChildren().add(startMenu);
