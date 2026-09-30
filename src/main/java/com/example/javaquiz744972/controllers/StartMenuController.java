@@ -15,8 +15,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class StartMenuController {
 
@@ -52,12 +50,13 @@ public class StartMenuController {
             if (selectedToggle == null) return;
             checkAnswer(selectedToggle);
         }
-        if (currentQuizIndex< quiz.getPages().size()) {
+
             loadNextQuestion();
-        }
+
     }
 
     private void loadNextQuestion() {
+        if (currentQuizIndex< quiz.getPages().size()) {
         Page page = quiz.getPages().get(currentQuizIndex);
         currentQuestion = page.getElements().get(0);
         currentQuizIndex++;
@@ -66,7 +65,7 @@ public class StartMenuController {
             case "boolean" -> loadBooleanQuestion((BooleanQuestion) currentQuestion);
         }
         startTimer(page.getTimeLimit());
-
+        }
     }
 
     private void checkAnswer(Toggle selectedToggle) {
