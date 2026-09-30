@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class StartMenuController {
 
@@ -141,16 +142,18 @@ public class StartMenuController {
     private void startTimer(int time) {
         stopTimer();
         timeLeft = time;
-
         if (timerLabel != null) {
             timerLabel.setText("Time left: " + timeLeft);
         }
-        Timer timer = new Timer();
+
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {
             timeLeft--;
             if (timerLabel != null) {
                 timerLabel.setText("Time left: " + timeLeft);
+            }
+            if (timeLeft <= 0) {
+                loadNextQuestion();
             }
         });
 
