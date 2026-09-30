@@ -1,16 +1,21 @@
 package com.example.javaquiz744972.controllers;
 
-import com.example.javaquiz744972.entities.BooleanQuestion;
-import com.example.javaquiz744972.entities.Question;
-import com.example.javaquiz744972.entities.Quiz;
-import com.example.javaquiz744972.entities.RadioQuestion;
+import com.example.javaquiz744972.entities.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
+
+import java.util.Timer;
 
 public class StartMenuController {
 
@@ -26,7 +31,11 @@ public class StartMenuController {
     private int currentQuizIndex = 0;
     private Question currentQuestion;
     private ToggleGroup toggleGroup;
-    private int rightAnswersCount =0;
+    private int rightAnswersCount = 0;
+
+    private Label timerLabel;
+    private Timeline timeline;
+    private int timeLeft = 0;
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
@@ -43,13 +52,20 @@ public class StartMenuController {
             checkAnswer(selectedToggle);
         }
         if (currentQuizIndex< quiz.getPages().size()) {
-            currentQuestion = quiz.getPages().get(currentQuizIndex).getElements().get(0);
-            currentQuizIndex++;
-            switch (currentQuestion.getType()) {
-                case "radiogroup" -> loadRadioQuestion((RadioQuestion) currentQuestion);
-                case "boolean" -> loadBooleanQuestion((BooleanQuestion) currentQuestion);
-            }
+            loadNextQuestion();
         }
+    }
+
+    private void loadNextQuestion() {
+        Page page = quiz.getPages().get(currentQuizIndex);
+        currentQuestion = page.getElements().get(0);
+        currentQuizIndex++;
+        switch (currentQuestion.getType()) {
+            case "radiogroup" -> loadRadioQuestion((RadioQuestion) currentQuestion);
+            case "boolean" -> loadBooleanQuestion((BooleanQuestion) currentQuestion);
+        }
+        startTimer(page.getTimeLimit());
+
     }
 
     private void checkAnswer(Toggle selectedToggle) {
@@ -79,6 +95,7 @@ public class StartMenuController {
         titleLabel.setWrapText(true);
         titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
         questionBox.getChildren().add(titleLabel);
+        questionBox.getChildren().add(createTopTimerHeader());
 
          toggleGroup = new ToggleGroup();
         for (String choice : question.getChoices()) {
@@ -96,6 +113,7 @@ public class StartMenuController {
         titleLabel.setWrapText(true);
         titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
         questionBox.getChildren().add(titleLabel);
+        questionBox.getChildren().add(createTopTimerHeader());
 
        toggleGroup = new ToggleGroup();
 
@@ -108,5 +126,42 @@ public class StartMenuController {
         falseRadioButton.setToggleGroup(toggleGroup);
 
         questionBox.getChildren().addAll(trueRadioButton, falseRadioButton);
+    }
+
+    private HBox createTopTimerHeader() {
+        timerLabel = new Label("Time: 0s");
+        timerLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #333333;");
+
+        HBox topBox = new HBox(timerLabel);
+        topBox.setAlignment(Pos.TOP_RIGHT);
+        HBox.setHgrow(topBox, Priority.ALWAYS);
+        return topBox;
+    }
+
+    private void startTimer(int time) {
+        stopTimer();
+        timeLeft = time;
+
+        if (timerLabel != null) {
+            timerLabel.setText("Time left: " + timeLeft);
+        }
+        Timer timer = new Timer();
+
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {
+            timeLeft--;
+            if (timerLabel != null) {
+                timerLabel.setText("Time left: " + timeLeft);
+            }
+        });
+
+        timeline = new Timeline(keyFrame);
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
+    private void stopTimer() {
+        if (timeline != null) {
+            timeline.stop();
+        }
     }
 }
