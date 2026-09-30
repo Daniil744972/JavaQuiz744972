@@ -8,11 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
-
-import java.io.IOException;
-import java.util.logging.Logger;
 
 public class StartMenuController {
 
@@ -26,6 +24,9 @@ public class StartMenuController {
 
     private Quiz quiz;
     private int currentQuizIndex = 0;
+    private Question currentQuestion;
+    private ToggleGroup toggleGroup;
+    private int rightAnswersCount =0;
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
@@ -36,14 +37,39 @@ public class StartMenuController {
     @FXML
     public void nextQuestion(ActionEvent actionEvent) {
         description.setText("");
+        if (currentQuestion != null) {
+            Toggle selectedToggle = toggleGroup.getSelectedToggle();
+            if (selectedToggle == null) return;
+            checkAnswer(selectedToggle);
+        }
         if (currentQuizIndex< quiz.getPages().size()) {
-            Question question = quiz.getPages().get(currentQuizIndex).getElements().get(0);
+            currentQuestion = quiz.getPages().get(currentQuizIndex).getElements().get(0);
             currentQuizIndex++;
-            switch (question.getType()) {
-                case "radiogroup" -> loadRadioQuestion((RadioQuestion) question);
-                case "boolean" -> loadBooleanQuestion((BooleanQuestion) question);
+            switch (currentQuestion.getType()) {
+                case "radiogroup" -> loadRadioQuestion((RadioQuestion) currentQuestion);
+                case "boolean" -> loadBooleanQuestion((BooleanQuestion) currentQuestion);
             }
         }
+    }
+
+    private void checkAnswer(Toggle selectedToggle) {
+        switch (currentQuestion.getType()) {
+            case "boolean":
+                BooleanQuestion booleanQuestion = (BooleanQuestion) currentQuestion;
+                Boolean bAnswer = (Boolean) selectedToggle.getUserData();
+                if (bAnswer.equals(booleanQuestion.isCorrectAnswer())){
+                    rightAnswersCount++;
+                }
+                break;
+            case "radiogroup":
+                RadioQuestion radioQuestion = (RadioQuestion) currentQuestion;
+                String sAnswer = (String) selectedToggle.getUserData();
+                if(sAnswer.equals(radioQuestion.getCorrectAnswer())){
+                    rightAnswersCount++;
+                }
+                break;
+        }
+
     }
 
     private void loadRadioQuestion(RadioQuestion question) {
@@ -54,10 +80,11 @@ public class StartMenuController {
         titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
         questionBox.getChildren().add(titleLabel);
 
-        ToggleGroup group = new ToggleGroup();
+         toggleGroup = new ToggleGroup();
         for (String choice : question.getChoices()) {
             RadioButton rb = new RadioButton(choice);
-            rb.setToggleGroup(group);
+            rb.setUserData(choice);
+            rb.setToggleGroup(toggleGroup);
             questionBox.getChildren().add(rb);
         }
     }
@@ -70,11 +97,15 @@ public class StartMenuController {
         titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
         questionBox.getChildren().add(titleLabel);
 
-        ToggleGroup group = new ToggleGroup();
+       toggleGroup = new ToggleGroup();
+
         RadioButton trueRadioButton = new RadioButton(question.getLabelTrue());
+        trueRadioButton.setUserData(true);
         RadioButton falseRadioButton = new RadioButton(question.getLabelFalse());
-        trueRadioButton.setToggleGroup(group);
-        falseRadioButton.setToggleGroup(group);
+        falseRadioButton.setUserData(false);
+
+        trueRadioButton.setToggleGroup(toggleGroup);
+        falseRadioButton.setToggleGroup(toggleGroup);
 
         questionBox.getChildren().addAll(trueRadioButton, falseRadioButton);
     }
