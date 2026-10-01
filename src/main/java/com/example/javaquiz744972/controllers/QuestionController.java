@@ -6,15 +6,14 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import javafx.util.Duration;
+
+import java.io.IOException;
 
 
 public class QuestionController {
@@ -26,6 +25,8 @@ public class QuestionController {
     private Label description;
     @FXML
     private VBox questionBox;
+    @FXML
+    private HBox buttonBox;
 
     private Quiz quiz;
     private int currentQuizIndex = 0;
@@ -37,10 +38,16 @@ public class QuestionController {
     private Timeline timeline;
     private int timeLeft = 0;
 
+    private QuizController quizController;
+
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
         quizName.setText(quiz.getTitle());
         description.setText(quiz.getDescription());
+    }
+
+    public void SetQuizController(QuizController quizController) {
+        this.quizController = quizController;
     }
 
     @FXML
@@ -135,6 +142,7 @@ public class QuestionController {
     private void finishQuiz(){
         stopTimer();
         questionBox.getChildren().clear();
+        buttonBox.getChildren().clear();
 
         String htmlTemplate = quiz.getCompletedHtml();
         String result = htmlTemplate
@@ -145,7 +153,34 @@ public class QuestionController {
         webView.getEngine().loadContent(result);
         webView.setPrefHeight(100);
         webView.setPageFill(javafx.scene.paint.Color.TRANSPARENT);
+
+        Button newTestButton = new Button("New Test");
+        newTestButton.setStyle("-fx-font-size: 14px; -fx-padding: 8 16;");
+        newTestButton.setOnAction(e -> {
+            try {
+                restartQuiz();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        Button exitButton = new Button("Exit");
+        exitButton.setStyle("-fx-font-size: 14px; -fx-padding: 8 16;");
+        exitButton.setOnAction(e -> handleExit());
+
         questionBox.getChildren().addAll(webView);
+        buttonBox.getChildren().addAll(newTestButton, exitButton);
+    }
+
+    private void restartQuiz() throws IOException{
+        stopTimer();
+        quizController.resetToMenu();
+
+    }
+
+    private void handleExit(){
+        javafx.stage.Stage stage = (javafx.stage.Stage) questionBox.getScene().getWindow();
+        stage.close();
     }
 
     private HBox createTopTimerHeader() {
