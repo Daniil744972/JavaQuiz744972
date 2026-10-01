@@ -8,6 +8,7 @@ module com.example.javaquiz744972 {
     requires java.desktop;
     requires java.logging;
     requires javafx.base;
+    requires javafx.web;
 
     opens com.example.javaquiz744972 to javafx.fxml;
     opens com.example.javaquiz744972.entities to

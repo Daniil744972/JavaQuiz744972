@@ -7,7 +7,7 @@ public class Quiz {
     private String title;
     private String description;
     private List<Page> pages;
-    private String competedHtml;
+    private String completedHtml;
 
     public Quiz(String quizId, String title, String description, List<Page> pages) {
         this.quizId = quizId;
@@ -49,11 +49,11 @@ public class Quiz {
         this.pages = pages;
     }
 
-    public String getCompetedHtml() {
-        return competedHtml;
+    public String getCompletedHtml() {
+        return completedHtml;
     }
 
-    public void setCompetedHtml(String competedHtml) {
-        this.competedHtml = competedHtml;
+    public void setCompletedHtml(String completedHtml) {
+        this.completedHtml = completedHtml;
     }
 }

@@ -13,6 +13,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import javafx.util.Duration;
 
 
@@ -65,6 +66,9 @@ public class QuestionController {
             case "boolean" -> loadBooleanQuestion((BooleanQuestion) currentQuestion);
         }
         startTimer(page.getTimeLimit());
+        }
+        else{
+            finishQuiz();
         }
     }
 
@@ -128,6 +132,22 @@ public class QuestionController {
         questionBox.getChildren().addAll(trueRadioButton, falseRadioButton);
     }
 
+    private void finishQuiz(){
+        stopTimer();
+        questionBox.getChildren().clear();
+
+        String htmlTemplate = quiz.getCompletedHtml();
+        String result = htmlTemplate
+                .replace("{correctAnswers}", String.valueOf(rightAnswersCount))
+                .replace("{questionCount}", String.valueOf(quiz.getPages().size()));
+
+        WebView webView = new WebView();
+        webView.getEngine().loadContent(result);
+        webView.setPrefHeight(100);
+        webView.setPageFill(javafx.scene.paint.Color.TRANSPARENT);
+        questionBox.getChildren().addAll(webView);
+    }
+
     private HBox createTopTimerHeader() {
         timerLabel = new Label("Time: 0s");
         timerLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #333333;");
@@ -137,6 +157,8 @@ public class QuestionController {
         HBox.setHgrow(topBox, Priority.ALWAYS);
         return topBox;
     }
+
+
 
     private void startTimer(int time) {
         stopTimer();
