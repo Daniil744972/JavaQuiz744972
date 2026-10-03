@@ -1,12 +1,19 @@
 package com.example.javaquiz744972.entities;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
+
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.VBox;
 
 import java.util.List;
 public class RadioQuestion extends Question {
  private String choiceOrder;
  private List<String> choices;
  private String correctAnswer;
+ private ToggleGroup toggleGroup;
 
     public RadioQuestion(String name, String type, String title, boolean isRequired, String choiceOrder, List<String> choices, String answer) {
         super(name, type, title, isRequired);
@@ -16,6 +23,31 @@ public class RadioQuestion extends Question {
     }
 
     public RadioQuestion() {
+        toggleGroup = new ToggleGroup();
+    }
+
+    @Override
+    public Node renderUI() {
+        VBox container = new VBox(10);
+
+        Label titleLabel = new Label(this.getTitle());
+        titleLabel.setWrapText(true);
+        titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+        container.getChildren().add(titleLabel);
+
+        for (String choice : getChoices()) {
+            RadioButton rb = new RadioButton(choice);
+            rb.setUserData(choice);
+            rb.setToggleGroup(toggleGroup);
+            container.getChildren().add(rb);
+        }
+        return container;
+    }
+
+    @Override
+    public boolean isRight() {
+        Toggle selectedToggle = toggleGroup.getSelectedToggle();
+        return selectedToggle.getUserData().equals(correctAnswer);
     }
 
     public String getChoiceOrder() {
@@ -41,4 +73,5 @@ public class RadioQuestion extends Question {
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
     }
+
 }

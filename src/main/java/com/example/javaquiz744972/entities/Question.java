@@ -2,6 +2,8 @@ package com.example.javaquiz744972.entities;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import javafx.scene.Node;
+
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
@@ -63,6 +65,10 @@ public abstract class Question {
     public void setRequired(boolean required) {
         isRequired = required;
     }
+
+    public abstract Node renderUI();
+
+    public abstract boolean isRight();
 
     @Override
     public String toString() {

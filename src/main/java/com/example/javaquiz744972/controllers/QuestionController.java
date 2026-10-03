@@ -6,6 +6,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -54,83 +55,29 @@ public class QuestionController {
     public void nextQuestion(ActionEvent actionEvent) {
         description.setText("");
         if (currentQuestion != null) {
-            Toggle selectedToggle = toggleGroup.getSelectedToggle();
-            if (selectedToggle == null) return;
-            checkAnswer(selectedToggle);
+            if (currentQuestion.isRight()) rightAnswersCount++;
         }
-
         loadNextQuestion();
-
     }
 
     private void loadNextQuestion() {
         if (currentQuizIndex < quiz.getPages().size()) {
             Page page = quiz.getPages().get(currentQuizIndex);
-            currentQuestion = page.getElements().get(0);
+            currentQuestion = page.getElements().getFirst();
             currentQuizIndex++;
-            if (currentQuestion instanceof BooleanQuestion) loadBooleanQuestion((BooleanQuestion) currentQuestion);
-            if (currentQuestion instanceof RadioQuestion) loadRadioQuestion((RadioQuestion) currentQuestion);
+            renderNextQuestion(currentQuestion);
             startTimer(page.getTimeLimit());
         } else {
             finishQuiz();
         }
     }
 
-    private void checkAnswer(Toggle selectedToggle) {
-        if (currentQuestion instanceof BooleanQuestion) {
-            BooleanQuestion booleanQuestion = (BooleanQuestion) currentQuestion;
-            Boolean bAnswer = (Boolean) selectedToggle.getUserData();
-            if (bAnswer.equals(booleanQuestion.isCorrectAnswer())) {
-                rightAnswersCount++;
-            }
-        }
-        if (currentQuestion instanceof RadioQuestion) {
-            RadioQuestion radioQuestion = (RadioQuestion) currentQuestion;
-            String sAnswer = (String) selectedToggle.getUserData();
-            if (sAnswer.equals(radioQuestion.getCorrectAnswer())) {
-                rightAnswersCount++;
-            }
-        }
-    }
-
-    private void loadRadioQuestion(RadioQuestion question) {
+    private void renderNextQuestion(Question question) {
         questionBox.getChildren().clear();
-
-        Label titleLabel = new Label(question.getTitle());
-        titleLabel.setWrapText(true);
-        titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
-        questionBox.getChildren().add(titleLabel);
         questionBox.getChildren().add(createTopTimerHeader());
 
-        toggleGroup = new ToggleGroup();
-        for (String choice : question.getChoices()) {
-            RadioButton rb = new RadioButton(choice);
-            rb.setUserData(choice);
-            rb.setToggleGroup(toggleGroup);
-            questionBox.getChildren().add(rb);
-        }
-    }
-
-    private void loadBooleanQuestion(BooleanQuestion question) {
-        questionBox.getChildren().clear();
-
-        Label titleLabel = new Label(question.getTitle());
-        titleLabel.setWrapText(true);
-        titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
-        questionBox.getChildren().add(titleLabel);
-        questionBox.getChildren().add(createTopTimerHeader());
-
-        toggleGroup = new ToggleGroup();
-
-        RadioButton trueRadioButton = new RadioButton(question.getLabelTrue());
-        trueRadioButton.setUserData(true);
-        RadioButton falseRadioButton = new RadioButton(question.getLabelFalse());
-        falseRadioButton.setUserData(false);
-
-        trueRadioButton.setToggleGroup(toggleGroup);
-        falseRadioButton.setToggleGroup(toggleGroup);
-
-        questionBox.getChildren().addAll(trueRadioButton, falseRadioButton);
+        Node UI = currentQuestion.renderUI();
+        questionBox.getChildren().add(UI);
     }
 
     private void finishQuiz() {
