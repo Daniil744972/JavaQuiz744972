@@ -70,6 +70,8 @@ public abstract class Question {
 
     public abstract boolean isRight();
 
+    public abstract boolean isToggleNull();
+
     @Override
     public String toString() {
         return "Question{" +

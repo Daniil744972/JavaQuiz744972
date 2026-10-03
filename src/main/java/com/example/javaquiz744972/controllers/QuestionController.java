@@ -32,7 +32,6 @@ public class QuestionController {
     private Quiz quiz;
     private int currentQuizIndex = 0;
     private Question currentQuestion;
-    private ToggleGroup toggleGroup;
     private int rightAnswersCount = 0;
 
     private Label timerLabel;
@@ -55,6 +54,7 @@ public class QuestionController {
     public void nextQuestion(ActionEvent actionEvent) {
         description.setText("");
         if (currentQuestion != null) {
+            if(currentQuestion.isToggleNull()) return;
             if (currentQuestion.isRight()) rightAnswersCount++;
         }
         loadNextQuestion();

@@ -50,6 +50,10 @@ public class RadioQuestion extends Question {
         return selectedToggle.getUserData().equals(correctAnswer);
     }
 
+    public boolean isToggleNull() {
+        return toggleGroup.getSelectedToggle() == null;
+    }
+
     public String getChoiceOrder() {
         return choiceOrder;
     }

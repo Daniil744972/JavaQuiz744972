@@ -74,6 +74,10 @@ public class BooleanQuestion extends Question {
         return container;
     }
 
+    public boolean isToggleNull() {
+        return toggleGroup.getSelectedToggle() == null;
+    }
+
     @Override
     public boolean isRight() {
         Toggle selectedToggle = toggleGroup.getSelectedToggle();
