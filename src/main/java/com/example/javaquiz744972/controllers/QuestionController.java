@@ -59,44 +59,38 @@ public class QuestionController {
             checkAnswer(selectedToggle);
         }
 
-            loadNextQuestion();
+        loadNextQuestion();
 
     }
 
     private void loadNextQuestion() {
-        if (currentQuizIndex< quiz.getPages().size()) {
-        Page page = quiz.getPages().get(currentQuizIndex);
-        currentQuestion = page.getElements().get(0);
-        currentQuizIndex++;
-        switch (currentQuestion.getType()) {
-            case "radiogroup" -> loadRadioQuestion((RadioQuestion) currentQuestion);
-            case "boolean" -> loadBooleanQuestion((BooleanQuestion) currentQuestion);
-        }
-        startTimer(page.getTimeLimit());
-        }
-        else{
+        if (currentQuizIndex < quiz.getPages().size()) {
+            Page page = quiz.getPages().get(currentQuizIndex);
+            currentQuestion = page.getElements().get(0);
+            currentQuizIndex++;
+            if (currentQuestion instanceof BooleanQuestion) loadBooleanQuestion((BooleanQuestion) currentQuestion);
+            if (currentQuestion instanceof RadioQuestion) loadRadioQuestion((RadioQuestion) currentQuestion);
+            startTimer(page.getTimeLimit());
+        } else {
             finishQuiz();
         }
     }
 
     private void checkAnswer(Toggle selectedToggle) {
-        switch (currentQuestion.getType()) {
-            case "boolean":
-                BooleanQuestion booleanQuestion = (BooleanQuestion) currentQuestion;
-                Boolean bAnswer = (Boolean) selectedToggle.getUserData();
-                if (bAnswer.equals(booleanQuestion.isCorrectAnswer())){
-                    rightAnswersCount++;
-                }
-                break;
-            case "radiogroup":
-                RadioQuestion radioQuestion = (RadioQuestion) currentQuestion;
-                String sAnswer = (String) selectedToggle.getUserData();
-                if(sAnswer.equals(radioQuestion.getCorrectAnswer())){
-                    rightAnswersCount++;
-                }
-                break;
+        if (currentQuestion instanceof BooleanQuestion) {
+            BooleanQuestion booleanQuestion = (BooleanQuestion) currentQuestion;
+            Boolean bAnswer = (Boolean) selectedToggle.getUserData();
+            if (bAnswer.equals(booleanQuestion.isCorrectAnswer())) {
+                rightAnswersCount++;
+            }
         }
-
+        if (currentQuestion instanceof RadioQuestion) {
+            RadioQuestion radioQuestion = (RadioQuestion) currentQuestion;
+            String sAnswer = (String) selectedToggle.getUserData();
+            if (sAnswer.equals(radioQuestion.getCorrectAnswer())) {
+                rightAnswersCount++;
+            }
+        }
     }
 
     private void loadRadioQuestion(RadioQuestion question) {
@@ -108,7 +102,7 @@ public class QuestionController {
         questionBox.getChildren().add(titleLabel);
         questionBox.getChildren().add(createTopTimerHeader());
 
-         toggleGroup = new ToggleGroup();
+        toggleGroup = new ToggleGroup();
         for (String choice : question.getChoices()) {
             RadioButton rb = new RadioButton(choice);
             rb.setUserData(choice);
@@ -126,7 +120,7 @@ public class QuestionController {
         questionBox.getChildren().add(titleLabel);
         questionBox.getChildren().add(createTopTimerHeader());
 
-       toggleGroup = new ToggleGroup();
+        toggleGroup = new ToggleGroup();
 
         RadioButton trueRadioButton = new RadioButton(question.getLabelTrue());
         trueRadioButton.setUserData(true);
@@ -139,7 +133,7 @@ public class QuestionController {
         questionBox.getChildren().addAll(trueRadioButton, falseRadioButton);
     }
 
-    private void finishQuiz(){
+    private void finishQuiz() {
         stopTimer();
         questionBox.getChildren().clear();
         buttonBox.getChildren().clear();
@@ -172,13 +166,13 @@ public class QuestionController {
         buttonBox.getChildren().addAll(newTestButton, exitButton);
     }
 
-    private void restartQuiz() throws IOException{
+    private void restartQuiz() throws IOException {
         stopTimer();
         quizController.resetToMenu();
 
     }
 
-    private void handleExit(){
+    private void handleExit() {
         javafx.stage.Stage stage = (javafx.stage.Stage) questionBox.getScene().getWindow();
         stage.close();
     }
@@ -192,7 +186,6 @@ public class QuestionController {
         HBox.setHgrow(topBox, Priority.ALWAYS);
         return topBox;
     }
-
 
 
     private void startTimer(int time) {
