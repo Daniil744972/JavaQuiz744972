@@ -6,6 +6,8 @@
 <?import javafx.scene.text.Font?>
 
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <VBox alignment="CENTER"
       prefHeight="400.0"
       prefWidth="600.0"
@@ -16,6 +18,11 @@
       fx:id="mainbox">
 
     <children>
+        <ImageView fitWidth="250.0" fitHeight="250.0" preserveRatio="true">
+            <image>
+                <Image url="@Quizavr.png" />
+            </image>
+        </ImageView>
         <Label text="Welcome to the Quizavr">
             <font>
                 <Font size="24.0"/>
