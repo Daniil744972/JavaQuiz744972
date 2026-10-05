@@ -9,6 +9,8 @@ module com.example.javaquiz744972 {
     requires java.logging;
     requires javafx.base;
     requires javafx.web;
+    requires jdk.jdi;
+    requires com.fasterxml.jackson.core;
 
     opens com.example.javaquiz744972 to javafx.fxml;
     opens com.example.javaquiz744972.entities to

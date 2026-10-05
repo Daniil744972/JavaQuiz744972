@@ -1,5 +1,6 @@
 package com.example.javaquiz744972.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -10,7 +11,6 @@ import javafx.scene.layout.VBox;
 
 @JsonTypeName("boolean")
 public class BooleanQuestion extends Question {
-
     private String labelTrue;
     private String labelFalse;
     private boolean correctAnswer;
@@ -83,6 +83,16 @@ public class BooleanQuestion extends Question {
         Toggle selectedToggle = toggleGroup.getSelectedToggle();
         Boolean selected = (Boolean) selectedToggle.getUserData();
         return selected == correctAnswer;
+    }
+    @Override
+    public void validate(){
+        super.validate();
+        if(labelTrue == null || labelTrue == ""){
+            throw new IllegalArgumentException("Missing required property: 'labelTrue'");
+        }
+        if(labelFalse == null || labelFalse == ""){
+            throw new IllegalArgumentException("Missing required property: 'labelFalse'");
+        }
     }
 
 }

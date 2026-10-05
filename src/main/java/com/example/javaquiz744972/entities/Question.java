@@ -81,4 +81,16 @@ public abstract class Question {
                 ", isRequired=" + isRequired +
                 '}';
     }
+
+    public void validate(){
+        if(name ==null||name.isEmpty()){
+            throw new IllegalArgumentException("Missing required property: 'name'");
+        }
+        if(type ==null||type.isEmpty()){
+            throw new IllegalArgumentException("Missing required property: 'type'");
+        }
+        if(title==null||title.isEmpty()){
+            throw new IllegalArgumentException("Missing required property: 'choice'");
+        }
+    }
 }

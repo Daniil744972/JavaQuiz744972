@@ -21,7 +21,7 @@
                 <Font size="24.0"/>
             </font>
         </Label>
-
+        <Label fx:id="error" />
         <Button text="Upload your Quiz" onAction="#loadQuiz"/>
     </children>
 

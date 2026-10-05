@@ -10,14 +10,14 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 public class RadioQuestion extends Question {
- private String choiceOrder;
+ private String choicesOrder;
  private List<String> choices;
  private String correctAnswer;
  private ToggleGroup toggleGroup;
 
     public RadioQuestion(String name, String type, String title, boolean isRequired, String choiceOrder, List<String> choices, String answer) {
         super(name, type, title, isRequired);
-        this.choiceOrder = choiceOrder;
+        this.choicesOrder = choiceOrder;
         this.choices = choices;
         this.correctAnswer = answer;
     }
@@ -54,12 +54,12 @@ public class RadioQuestion extends Question {
         return toggleGroup.getSelectedToggle() == null;
     }
 
-    public String getChoiceOrder() {
-        return choiceOrder;
+    public String getChoicesOrder() {
+        return choicesOrder;
     }
 
-    public void setChoiceOrder(String choiceOrder) {
-        this.choiceOrder = choiceOrder;
+    public void setChoicesOrder(String choicesOrder) {
+        this.choicesOrder = choicesOrder;
     }
 
     public List<String> getChoices() {
@@ -78,4 +78,17 @@ public class RadioQuestion extends Question {
         this.correctAnswer = correctAnswer;
     }
 
+    @Override
+    public void validate() {
+        super.validate();
+        if (choicesOrder == null || choicesOrder.isEmpty()) {
+            throw new IllegalArgumentException("Missing required property: 'choiceOrder'");
+        }
+        if (choices == null || choices.isEmpty()) {
+            throw new IllegalArgumentException("Missing required property: 'choices'");
+        }
+        if (correctAnswer == null || correctAnswer.isEmpty()) {
+            throw new IllegalArgumentException("Missing required property: 'correctAnswer'");
+        }
+    }
 }
