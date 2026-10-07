@@ -4,7 +4,8 @@ import com.example.javaquiz744972.entities.Page;
 import com.example.javaquiz744972.entities.Question;
 import com.example.javaquiz744972.entities.Quiz;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameManager {
     private static GameManager instance;
@@ -12,22 +13,39 @@ public class GameManager {
     private String userName;
     private int score = 0;
     private Map<Page, Boolean> result = new HashMap<>();
+    private int currentIndex = 0;
+    private Page currentPage;
+    private Question currentQuestion;
 
-    private GameManager(){}
-
-    public static GameManager getInstance(){
-    if(instance == null){
-            instance = new GameManager();
+    private GameManager() {
     }
-    return instance;
+
+    public static GameManager getInstance() {
+        if (instance == null) {
+            instance = new GameManager();
+        }
+        return instance;
     }
 
     public Quiz getQuiz() {
         return quiz;
     }
 
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
+    public void loadQuiz() {
+        QuestionsReader questionsReader = new QuestionsReader();
+        quiz = questionsReader.ReadQuiz();
+        currentIndex = 0;
+        currentPage = quiz.getPages().get(currentIndex);
+        currentQuestion = currentPage.getElements().getFirst();
+    }
+
+    public void finishQuiz() {
+        currentIndex = 0;
+        currentPage = null;
+        currentQuestion = null;
+    }
+    public void cleanQuiz(){
+        quiz = null;
     }
 
     public String getUserName() {
@@ -46,8 +64,33 @@ public class GameManager {
         score++;
     }
 
-    public void addResult(Page page, Boolean isRight){
-        result.put(page,isRight);
+    public void addResult(Page page, Boolean isRight) {
+        result.put(page, isRight);
     }
 
+    public Page getCurrentPage() {
+        return currentPage;
+    }
+
+    public void getNextPage() {
+        currentIndex++;
+        if (currentIndex < quiz.getPages().size()) {
+            currentPage = quiz.getPages().get(currentIndex);
+            currentQuestion = currentPage.getElements().getFirst();
+            return;
+        }
+        finishQuiz();
+    }
+
+    public void processQuestion() {
+            if (currentPage != null) {
+            if (currentQuestion.isToggleNull()) return;
+            if (currentQuestion.isRight()) increaseScore();
+            getNextPage();
+        }
+    }
+
+    public Question getCurrentQuestion() {
+        return currentQuestion;
+    }
 }

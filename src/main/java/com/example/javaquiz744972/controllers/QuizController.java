@@ -1,5 +1,6 @@
 package com.example.javaquiz744972.controllers;
 
+import com.example.javaquiz744972.GameManager;
 import com.example.javaquiz744972.QuestionsReader;
 import com.example.javaquiz744972.entities.Question;
 import com.example.javaquiz744972.entities.Quiz;
@@ -20,7 +21,6 @@ public class QuizController {
     @FXML
     private Label error;
 
-    private Quiz quiz;
     private List<Question> questions;
     private List<Node> initialContent;
 
@@ -30,17 +30,11 @@ public class QuizController {
     }
 
     public void loadQuiz(ActionEvent actionEvent) {
-        QuestionsReader questionsReader = new QuestionsReader();
-        try {
-            quiz = questionsReader.ReadQuiz();
-            if(quiz == null) {
-                return;
-            }
+    try{
+            GameManager.getInstance().loadQuiz();
+            if(GameManager.getInstance().getQuiz() == null) return;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/javaquiz744972/StartMenu.fxml"));
             VBox startMenu = fxmlLoader.load();
-
-            QuestionController questionController = fxmlLoader.getController();
-            questionController.setQuiz(quiz);
 
             mainbox.getChildren().clear();
             mainbox.getChildren().add(startMenu);

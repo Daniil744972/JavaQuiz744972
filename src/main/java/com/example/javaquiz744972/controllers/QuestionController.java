@@ -1,13 +1,14 @@
 package com.example.javaquiz744972.controllers;
 
-import com.example.javaquiz744972.entities.*;
+import com.example.javaquiz744972.GameManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -28,50 +29,38 @@ public class QuestionController {
     private VBox questionBox;
     @FXML
     private HBox buttonBox;
-
-    private Quiz quiz;
-    private int currentQuizIndex = 0;
-    private Question currentQuestion;
-    private int rightAnswersCount = 0;
-
+    private GameManager manager = GameManager.getInstance();
     private Label timerLabel;
     private Timeline timeline;
     private int timeLeft = 0;
 
 
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
-        quizName.setText(quiz.getTitle());
-        description.setText(quiz.getDescription());
+    public void initialize() {
+        quizName.setText(manager.getQuiz().getTitle());
+        description.setText(manager.getQuiz().getDescription());
     }
 
     @FXML
     public void nextQuestion(ActionEvent actionEvent) {
         description.setText("");
-        if (currentQuestion != null) {
-            if(currentQuestion.isToggleNull()) return;
-            if (currentQuestion.isRight()) rightAnswersCount++;
-        }
+        manager.processQuestion();
         loadNextQuestion();
     }
 
     private void loadNextQuestion() {
-        if (currentQuizIndex < quiz.getPages().size()) {
-            Page page = quiz.getPages().get(currentQuizIndex);
-            currentQuestion = page.getElements().getFirst();
-            currentQuizIndex++;
-            renderNextQuestion(currentQuestion);
-            startTimer(page.getTimeLimit());
+        if (manager.getCurrentPage() != null) {
+            renderNextQuestion();
+            startTimer();
         } else {
             finishQuiz();
         }
     }
 
-    private void renderNextQuestion(Question question) {
+    private void renderNextQuestion() {
         questionBox.getChildren().clear();
         questionBox.getChildren().add(createTopTimerHeader());
 
-        Node UI = currentQuestion.renderUI();
+        Node UI = manager.getCurrentQuestion().renderUI();
         questionBox.getChildren().add(UI);
     }
 
@@ -79,11 +68,10 @@ public class QuestionController {
         stopTimer();
         questionBox.getChildren().clear();
         buttonBox.getChildren().clear();
-
-        String htmlTemplate = quiz.getCompletedHtml();
+        String htmlTemplate = manager.getQuiz().getCompletedHtml();
         String result = htmlTemplate
-                .replace("{correctAnswers}", String.valueOf(rightAnswersCount))
-                .replace("{questionCount}", String.valueOf(quiz.getPages().size()));
+                .replace("{correctAnswers}", String.valueOf(manager.getScore()))
+                .replace("{questionCount}", String.valueOf(manager.getQuiz().getPages().size()));
 
         WebView webView = new WebView();
         webView.getEngine().loadContent(result);
@@ -106,6 +94,7 @@ public class QuestionController {
 
         questionBox.getChildren().addAll(webView);
         buttonBox.getChildren().addAll(newTestButton, exitButton);
+        manager.cleanQuiz();
     }
 
     private void restartQuiz() throws IOException {
@@ -130,9 +119,9 @@ public class QuestionController {
     }
 
 
-    private void startTimer(int time) {
+    private void startTimer() {
         stopTimer();
-        timeLeft = time;
+        timeLeft = manager.getCurrentPage().getTimeLimit();
         if (timerLabel != null) {
             timerLabel.setText("Time left: " + timeLeft);
         }
