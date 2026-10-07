@@ -11,67 +11,7 @@ public class GameManager {
     private Quiz quiz;
     private String userName;
     private int score = 0;
-    private Map<Page, Boolean> result = new HashMap<>() {
-        @Override
-        public int size() {
-            return 0;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-
-        @Override
-        public boolean containsKey(Object key) {
-            return false;
-        }
-
-        @Override
-        public boolean containsValue(Object value) {
-            return false;
-        }
-
-        @Override
-        public Boolean get(Object key) {
-            return null;
-        }
-
-        @Override
-        public Boolean put(Page key, Boolean value) {
-            return null;
-        }
-
-        @Override
-        public Boolean remove(Object key) {
-            return null;
-        }
-
-        @Override
-        public void putAll(Map<? extends Page, ? extends Boolean> m) {
-
-        }
-
-        @Override
-        public void clear() {
-
-        }
-
-        @Override
-        public Set<Page> keySet() {
-            return Set.of();
-        }
-
-        @Override
-        public Collection<Boolean> values() {
-            return List.of();
-        }
-
-        @Override
-        public Set<Entry<Page, Boolean>> entrySet() {
-            return Set.of();
-        }
-    };
+    private Map<Page, Boolean> result = new HashMap<>();
 
     private GameManager(){}
 
@@ -80,10 +20,6 @@ public class GameManager {
             instance = new GameManager();
     }
     return instance;
-    }
-
-    public static void setInstance(GameManager instance) {
-        GameManager.instance = instance;
     }
 
     public Quiz getQuiz() {
