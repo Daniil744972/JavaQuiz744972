@@ -11,7 +11,7 @@ public class GameManager {
     private Quiz quiz;
     private String userName;
     private int score = 0;
-    private Map<Page, Boolean> result = new Map<Page, Boolean>() {
+    private Map<Page, Boolean> result = new HashMap<>() {
         @Override
         public int size() {
             return 0;
