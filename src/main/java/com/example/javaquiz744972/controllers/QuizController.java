@@ -41,7 +41,6 @@ public class QuizController {
 
             QuestionController questionController = fxmlLoader.getController();
             questionController.setQuiz(quiz);
-            questionController.SetQuizController(this);
 
             mainbox.getChildren().clear();
             mainbox.getChildren().add(startMenu);

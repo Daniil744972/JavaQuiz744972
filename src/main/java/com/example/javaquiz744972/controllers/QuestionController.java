@@ -38,16 +38,11 @@ public class QuestionController {
     private Timeline timeline;
     private int timeLeft = 0;
 
-    private QuizController quizController;
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
         quizName.setText(quiz.getTitle());
         description.setText(quiz.getDescription());
-    }
-
-    public void SetQuizController(QuizController quizController) {
-        this.quizController = quizController;
     }
 
     @FXML
@@ -115,7 +110,7 @@ public class QuestionController {
 
     private void restartQuiz() throws IOException {
         stopTimer();
-        quizController.resetToMenu();
+//        QuizController.getInstance().resetToMenu();
 
     }
 

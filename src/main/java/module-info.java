@@ -11,6 +11,7 @@ module com.example.javaquiz744972 {
     requires javafx.web;
     requires jdk.jdi;
     requires com.fasterxml.jackson.core;
+    requires javafx.graphics;
 
     opens com.example.javaquiz744972 to javafx.fxml;
     opens com.example.javaquiz744972.entities to

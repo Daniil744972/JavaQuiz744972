@@ -25,4 +25,5 @@ public class Main extends Application {
         stage.getIcons().add(new Image(stream));
         stage.show();
     }
+
 }
