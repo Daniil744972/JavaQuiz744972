@@ -1,0 +1,14 @@
+.questionName{
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+.button{
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+}
+.timer{
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+

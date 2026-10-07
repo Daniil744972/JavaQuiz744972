@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 
 public class QuestionsReader {
     private ObjectMapper mapper = new ObjectMapper();
-    private Logger logger = Logger.getLogger(QuestionsReader.class.getName());
 
     public Quiz ReadQuiz() {
         FileDialog fd = new FileDialog(new JFrame(), "Select Questions", FileDialog.LOAD);

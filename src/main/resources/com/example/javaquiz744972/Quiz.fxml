@@ -20,10 +20,10 @@
     <children>
         <ImageView fitWidth="250.0" fitHeight="250.0" preserveRatio="true">
             <image>
-                <Image url="@Quizavr.png" />
+                <Image url="@img/Quizavr.png" />
             </image>
         </ImageView>
-        <Label text="Welcome to the Quizavr">
+        <Label text="Welcome to the Quizaur">
             <font>
                 <Font size="24.0"/>
             </font>

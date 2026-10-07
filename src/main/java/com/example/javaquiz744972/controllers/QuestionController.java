@@ -79,7 +79,7 @@ public class QuestionController {
         webView.setPageFill(javafx.scene.paint.Color.TRANSPARENT);
 
         Button newTestButton = new Button("New Test");
-        newTestButton.setStyle("-fx-font-size: 14px; -fx-padding: 8 16;");
+        newTestButton.getStyleClass().add("button");
         newTestButton.setOnAction(e -> {
             try {
                 restartQuiz();
@@ -89,7 +89,7 @@ public class QuestionController {
         });
 
         Button exitButton = new Button("Exit");
-        exitButton.setStyle("-fx-font-size: 14px; -fx-padding: 8 16;");
+        exitButton.getStyleClass().add("button");
         exitButton.setOnAction(e -> handleExit());
 
         questionBox.getChildren().addAll(webView);
@@ -110,7 +110,7 @@ public class QuestionController {
 
     private HBox createTopTimerHeader() {
         timerLabel = new Label("Time: 0s");
-        timerLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #333333;");
+        timerLabel.getStyleClass().add("timer");
 
         HBox topBox = new HBox(timerLabel);
         topBox.setAlignment(Pos.TOP_RIGHT);

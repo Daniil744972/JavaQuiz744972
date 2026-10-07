@@ -57,7 +57,7 @@ public class BooleanQuestion extends Question {
 
         Label titleLabel = new Label(this.getTitle());
         titleLabel.setWrapText(true);
-        titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+        titleLabel.getStyleClass().add("questionName");
 
        toggleGroup = new ToggleGroup();
 

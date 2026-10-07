@@ -32,7 +32,7 @@ public class RadioQuestion extends Question {
 
         Label titleLabel = new Label(this.getTitle());
         titleLabel.setWrapText(true);
-        titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+        titleLabel.getStyleClass().add("questionName");
         container.getChildren().add(titleLabel);
 
         for (String choice : getChoices()) {

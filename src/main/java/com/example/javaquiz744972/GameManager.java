@@ -86,6 +86,7 @@ public class GameManager {
             if (currentPage != null) {
             if (currentQuestion.isToggleNull()) return;
             if (currentQuestion.isRight()) increaseScore();
+            addResult(currentPage, currentQuestion.isRight());
             getNextPage();
         }
     }
