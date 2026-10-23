@@ -38,6 +38,7 @@ public class QuestionController {
     public void initialize() {
         quizName.setText(manager.getQuiz().getTitle());
         description.setText(manager.getQuiz().getDescription());
+
     }
 
     @FXML
@@ -99,8 +100,7 @@ public class QuestionController {
 
     private void restartQuiz() throws IOException {
         stopTimer();
-//        QuizController.getInstance().resetToMenu();
-
+        manager.gameReset();
     }
 
     private void handleExit() {

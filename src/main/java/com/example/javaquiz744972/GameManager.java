@@ -3,8 +3,11 @@ package com.example.javaquiz744972;
 import com.example.javaquiz744972.entities.Page;
 import com.example.javaquiz744972.entities.Question;
 import com.example.javaquiz744972.entities.Quiz;
+import com.example.javaquiz744972.observer.GameObserver;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GameManager {
@@ -16,6 +19,7 @@ public class GameManager {
     private int currentIndex = 0;
     private Page currentPage;
     private Question currentQuestion;
+    private List<GameObserver> observers = new ArrayList<>();
 
     private GameManager() {
     }
@@ -34,6 +38,7 @@ public class GameManager {
     public void loadQuiz() {
         QuestionsReader questionsReader = new QuestionsReader();
         quiz = questionsReader.ReadQuiz();
+        if(quiz == null) return;
         currentIndex = 0;
         currentPage = quiz.getPages().get(currentIndex);
         currentQuestion = currentPage.getElements().getFirst();
@@ -93,5 +98,20 @@ public class GameManager {
 
     public Question getCurrentQuestion() {
         return currentQuestion;
+    }
+
+    public void addObserver(GameObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(GameObserver observer) {
+        observers.remove(observer);
+    }
+
+    public void gameReset() {
+        cleanQuiz();
+        for (GameObserver observer : observers) {
+            observer.onGameReset();
+        }
     }
 }
