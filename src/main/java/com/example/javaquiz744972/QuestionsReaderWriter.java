@@ -11,10 +11,11 @@ import tools.jackson.databind.exc.InvalidTypeIdException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.util.logging.Logger;
+import java.io.IOException;
 
-public class QuestionsReader {
+public class QuestionsReaderWriter {
     private ObjectMapper mapper = new ObjectMapper();
+    private GameManager manager = GameManager.getInstance();
 
     public Quiz ReadQuiz() {
         FileDialog fd = new FileDialog(new JFrame(), "Select Questions", FileDialog.LOAD);
@@ -25,6 +26,7 @@ public class QuestionsReader {
             return null;
         }
         File selectedFile = new File(fd.getDirectory(), fd.getFile());
+        manager.setFile(selectedFile);
         try {
             Quiz quiz = mapper.readValue(selectedFile, Quiz.class);
             for(Page page : quiz.getPages()) {
@@ -44,5 +46,18 @@ public class QuestionsReader {
             throw new IllegalArgumentException("Failed to parse Quiz file.", e);
         }
 
+    }
+
+    public void WriteQuiz() {
+        if (manager.getQuiz() == null) {
+            throw new IllegalStateException("Quiz has not been set");
+        }
+
+        try{
+            mapper.writerWithDefaultPrettyPrinter()
+                    .writeValue(manager.getFile(),manager.getQuiz());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Failed to write Quiz file.",e);
+        }
     }
 }

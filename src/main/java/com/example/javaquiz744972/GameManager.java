@@ -5,6 +5,8 @@ import com.example.javaquiz744972.entities.Question;
 import com.example.javaquiz744972.entities.Quiz;
 import com.example.javaquiz744972.observer.GameObserver;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +22,7 @@ public class GameManager {
     private Page currentPage;
     private Question currentQuestion;
     private List<GameObserver> observers = new ArrayList<>();
+    private File file;
 
     private GameManager() {
     }
@@ -36,18 +39,31 @@ public class GameManager {
     }
 
     public void loadQuiz() {
-        QuestionsReader questionsReader = new QuestionsReader();
-        quiz = questionsReader.ReadQuiz();
+        QuestionsReaderWriter reader = new QuestionsReaderWriter();
+        quiz = reader.ReadQuiz();
         if(quiz == null) return;
         currentIndex = 0;
         currentPage = quiz.getPages().get(currentIndex);
         currentQuestion = currentPage.getElements().getFirst();
     }
 
+    private void writeQuiz() throws IOException {
+        QuestionsReaderWriter writer = new QuestionsReaderWriter();
+        writer.WriteQuiz();
+    }
+
     public void finishQuiz() {
-        currentIndex = 0;
-        currentPage = null;
-        currentQuestion = null;
+        try {
+            writeQuiz();
+            currentIndex = 0;
+            currentPage = null;
+            currentQuestion = null;
+        }
+        catch (IOException e) {
+            throw new IllegalArgumentException("Failed to write Quiz file.",e);
+        }
+
+
     }
     public void cleanQuiz(){
         quiz = null;
@@ -113,5 +129,13 @@ public class GameManager {
         for (GameObserver observer : observers) {
             observer.onGameReset();
         }
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
     }
 }
