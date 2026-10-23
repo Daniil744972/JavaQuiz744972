@@ -8,7 +8,6 @@ public class Quiz {
     private String description;
     private List<Page> pages;
     private String completedHtml;
-
     public Quiz(String quizId, String title, String description, List<Page> pages) {
         this.quizId = quizId;
         this.title = title;

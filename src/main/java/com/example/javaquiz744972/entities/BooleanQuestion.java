@@ -1,6 +1,5 @@
 package com.example.javaquiz744972.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -59,7 +58,7 @@ public class BooleanQuestion extends Question {
         titleLabel.setWrapText(true);
         titleLabel.getStyleClass().add("questionName");
 
-       toggleGroup = new ToggleGroup();
+        toggleGroup = new ToggleGroup();
 
         RadioButton trueRadioButton = new RadioButton(this.getLabelTrue());
         trueRadioButton.setUserData(true);
@@ -82,15 +81,17 @@ public class BooleanQuestion extends Question {
     public boolean isRight() {
         Toggle selectedToggle = toggleGroup.getSelectedToggle();
         Boolean selected = (Boolean) selectedToggle.getUserData();
-        return selected == correctAnswer;
+        setAnsweredCorrectly(selected == correctAnswer);
+        return isAnsweredCorrectly();
     }
+
     @Override
-    public void validate(){
+    public void validate() {
         super.validate();
-        if(labelTrue == null || labelTrue == ""){
+        if (labelTrue == null || labelTrue == "") {
             throw new IllegalArgumentException("Missing required property: 'labelTrue'");
         }
-        if(labelFalse == null || labelFalse == ""){
+        if (labelFalse == null || labelFalse == "") {
             throw new IllegalArgumentException("Missing required property: 'labelFalse'");
         }
     }
