@@ -4,6 +4,7 @@ import com.example.javaquiz744972.entities.Page;
 import com.example.javaquiz744972.entities.Question;
 import com.example.javaquiz744972.entities.Quiz;
 import com.example.javaquiz744972.observer.GameObserver;
+import javafx.scene.control.ToggleGroup;
 
 import java.io.File;
 import java.io.IOException;
@@ -112,11 +113,11 @@ public class GameManager {
         finishQuiz();
     }
 
-    public void processQuestion() {
+    public void processQuestion(ToggleGroup toggleGroup) {
             if (currentPage != null) {
-            if (currentQuestion.isToggleNull()) return;
-            if (currentQuestion.isRight()) increaseScore();
-            addResult(currentPage, currentQuestion.isRight());
+            if (currentQuestion.isToggleNull(toggleGroup)) return;
+            if (currentQuestion.isRight(toggleGroup)) increaseScore();
+            addResult(currentPage, currentQuestion.isRight(toggleGroup));
             getNextPage();
         }
     }

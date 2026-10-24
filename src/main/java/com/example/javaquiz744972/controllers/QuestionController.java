@@ -1,6 +1,8 @@
 package com.example.javaquiz744972.controllers;
 
 import com.example.javaquiz744972.GameManager;
+import com.example.javaquiz744972.QuestionViewFactory;
+import com.example.javaquiz744972.entities.QuestionView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -33,6 +35,9 @@ public class QuestionController {
     private Label timerLabel;
     private Timeline timeline;
     private int timeLeft = 0;
+    private QuestionView currentQuestionView;
+
+    private QuestionViewFactory factory = new QuestionViewFactory();
 
 
     public void initialize() {
@@ -44,7 +49,8 @@ public class QuestionController {
     @FXML
     public void nextQuestion(ActionEvent actionEvent) {
         description.setText("");
-        manager.processQuestion();
+        if (currentQuestionView != null) {
+        manager.processQuestion(currentQuestionView.getToggleGroup());}
         loadNextQuestion();
     }
 
@@ -61,8 +67,8 @@ public class QuestionController {
         questionBox.getChildren().clear();
         questionBox.getChildren().add(createTopTimerHeader());
 
-        Node UI = manager.getCurrentQuestion().renderUI();
-        questionBox.getChildren().add(UI);
+        currentQuestionView = factory.GetQuestionView(manager.getCurrentQuestion());
+        questionBox.getChildren().add(currentQuestionView.getUI());
     }
 
     private void finishQuiz() {

@@ -13,7 +13,6 @@ public class RadioQuestion extends Question {
  private String choicesOrder;
  private List<String> choices;
  private String correctAnswer;
- private ToggleGroup toggleGroup;
 
     public RadioQuestion(String name, String type, String title, boolean isRequired, String choiceOrder, List<String> choices, String answer) {
         super(name, type, title, isRequired);
@@ -23,34 +22,16 @@ public class RadioQuestion extends Question {
     }
 
     public RadioQuestion() {
-        toggleGroup = new ToggleGroup();
     }
 
-    @Override
-    public Node renderUI() {
-        VBox container = new VBox(10);
-
-        Label titleLabel = new Label(this.getTitle());
-        titleLabel.setWrapText(true);
-        titleLabel.getStyleClass().add("questionName");
-        container.getChildren().add(titleLabel);
-
-        for (String choice : getChoices()) {
-            RadioButton rb = new RadioButton(choice);
-            rb.setUserData(choice);
-            rb.setToggleGroup(toggleGroup);
-            container.getChildren().add(rb);
-        }
-        return container;
-    }
 
     @Override
-    public boolean isRight() {
+    public boolean isRight(ToggleGroup toggleGroup) {
         Toggle selectedToggle = toggleGroup.getSelectedToggle();
         return selectedToggle.getUserData().equals(correctAnswer);
     }
 
-    public boolean isToggleNull() {
+    public boolean isToggleNull(ToggleGroup toggleGroup) {
         return toggleGroup.getSelectedToggle() == null;
     }
 
@@ -77,6 +58,7 @@ public class RadioQuestion extends Question {
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
     }
+
 
     @Override
     public void validate() {

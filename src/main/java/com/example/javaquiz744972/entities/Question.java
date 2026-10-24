@@ -3,6 +3,7 @@ package com.example.javaquiz744972.entities;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import javafx.scene.Node;
+import javafx.scene.control.ToggleGroup;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -67,11 +68,9 @@ public abstract class Question {
         isRequired = required;
     }
 
-    public abstract Node renderUI();
+    public abstract boolean isRight(ToggleGroup toggleGroup);
 
-    public abstract boolean isRight();
-
-    public abstract boolean isToggleNull();
+    public abstract boolean isToggleNull(ToggleGroup toggleGroup);
 
     @Override
     public String toString() {
