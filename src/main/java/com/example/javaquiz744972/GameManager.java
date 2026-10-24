@@ -7,6 +7,7 @@ import com.example.javaquiz744972.observer.GameObserver;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,15 @@ public class GameManager {
     private Page currentPage;
     private Question currentQuestion;
     private List<GameObserver> observers = new ArrayList<>();
-    private File file;
+    private Path path;
+
+    public Path getPath() {
+        return path;
+    }
+
+    public void setPath(Path path) {
+        this.path = path;
+    }
 
     private GameManager() {
     }
@@ -112,6 +121,12 @@ public class GameManager {
         }
     }
 
+    public void processQuestionWithNull(){
+        if (currentPage != null){
+            getNextPage();
+        }
+    }
+
     public Question getCurrentQuestion() {
         return currentQuestion;
     }
@@ -129,13 +144,5 @@ public class GameManager {
         for (GameObserver observer : observers) {
             observer.onGameReset();
         }
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
     }
 }

@@ -25,7 +25,6 @@ public abstract class Question {
     private String type;
     private String title;
     private boolean isRequired;
-    private boolean isAnsweredCorrectly;
 
     public Question(String name, String type, String title, boolean isRequired) {
         this.name = name;
@@ -94,13 +93,5 @@ public abstract class Question {
         if(title==null||title.isEmpty()){
             throw new IllegalArgumentException("Missing required property: 'choice'");
         }
-    }
-
-    public boolean isAnsweredCorrectly() {
-        return isAnsweredCorrectly;
-    }
-
-    public void setAnsweredCorrectly(boolean answeredCorrectly) {
-        isAnsweredCorrectly = answeredCorrectly;
     }
 }

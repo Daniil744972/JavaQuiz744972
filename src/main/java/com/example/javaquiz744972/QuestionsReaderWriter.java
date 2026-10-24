@@ -2,6 +2,8 @@ package com.example.javaquiz744972;
 
 import com.example.javaquiz744972.entities.Page;
 import com.example.javaquiz744972.entities.Quiz;
+import com.example.javaquiz744972.entities.Result;
+import com.example.javaquiz744972.entities.ResultDTO;
 import tools.jackson.core.JacksonException;
 import tools.jackson.core.exc.StreamReadException;
 import tools.jackson.databind.DatabindException;
@@ -11,7 +13,15 @@ import tools.jackson.databind.exc.InvalidTypeIdException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 public class QuestionsReaderWriter {
     private ObjectMapper mapper = new ObjectMapper();
@@ -25,11 +35,11 @@ public class QuestionsReaderWriter {
         if (file == null || file.trim().isEmpty()) {
             return null;
         }
+        manager.setPath(Path.of(fd.getDirectory()));
         File selectedFile = new File(fd.getDirectory(), fd.getFile());
-        manager.setFile(selectedFile);
         try {
             Quiz quiz = mapper.readValue(selectedFile, Quiz.class);
-            for(Page page : quiz.getPages()) {
+            for (Page page : quiz.getPages()) {
                 page.getElements().getFirst().validate();
             }
             return quiz;
@@ -52,12 +62,35 @@ public class QuestionsReaderWriter {
         if (manager.getQuiz() == null) {
             throw new IllegalStateException("Quiz has not been set");
         }
+        Result newResult = new Result(manager.getUserName(),manager.getQuiz().getPages().size(),
+                manager.getScore(), LocalDateTime.now().format( DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
 
-        try{
-            mapper.writerWithDefaultPrettyPrinter()
-                    .writeValue(manager.getFile(),manager.getQuiz());
+
+
+        try {
+            Path file = manager.getPath().resolve(manager.getQuiz().getQuizId() + "-results.json");
+            ResultDTO dto;
+
+            if(Files.exists(file)) {
+                dto = mapper.readValue(file.toFile(), ResultDTO.class);
+                List<Result> results = new ArrayList<>(dto.results());
+                results.add(newResult);
+
+                dto = new ResultDTO(
+                        manager.getQuiz().getQuizId(),
+                        manager.getQuiz().getTitle(),
+                        results
+                );
+            } else {
+                dto = new ResultDTO(
+                        manager.getQuiz().getQuizId(),
+                        manager.getQuiz().getTitle(),
+                        new ArrayList<>(List.of(newResult)));
+            }
+
+            mapper.writeValue(file.toFile(), dto);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Failed to write Quiz file.",e);
+            throw new IllegalArgumentException("Failed to write Quiz file.", e);
         }
     }
 }

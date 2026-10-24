@@ -81,8 +81,7 @@ public class BooleanQuestion extends Question {
     public boolean isRight() {
         Toggle selectedToggle = toggleGroup.getSelectedToggle();
         Boolean selected = (Boolean) selectedToggle.getUserData();
-        setAnsweredCorrectly(selected == correctAnswer);
-        return isAnsweredCorrectly();
+        return selected == correctAnswer;
     }
 
     @Override

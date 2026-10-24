@@ -47,8 +47,7 @@ public class RadioQuestion extends Question {
     @Override
     public boolean isRight() {
         Toggle selectedToggle = toggleGroup.getSelectedToggle();
-        setAnsweredCorrectly(selectedToggle.getUserData().equals(correctAnswer));
-        return isAnsweredCorrectly();
+        return selectedToggle.getUserData().equals(correctAnswer);
     }
 
     public boolean isToggleNull() {

@@ -133,6 +133,7 @@ public class QuestionController {
                 timerLabel.setText("Time left: " + timeLeft);
             }
             if (timeLeft <= 0) {
+                manager.processQuestionWithNull();
                 loadNextQuestion();
             }
         });
