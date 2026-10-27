@@ -108,3 +108,5 @@ The application should handle common problems such as missing or invalid quiz fi
 - `GameManager` coordinates the active quiz session.
 - Results are stored separately from quiz definitions so the original quiz data is not overwritten by quiz attempts.
 
+## Github
+https://github.com/Daniil744972/JavaQuiz744972
