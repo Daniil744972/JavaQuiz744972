@@ -23,6 +23,7 @@ public class Main extends Application {
 
         stage.setTitle("Java Quiz");
         stage.setScene(scene);
+
         stage.getIcons().add(new Image(stream));
         stage.show();
     }

@@ -5,8 +5,8 @@ import com.example.javaquiz744972.entities.Question;
 import com.example.javaquiz744972.entities.Quiz;
 import com.example.javaquiz744972.observer.GameObserver;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Window;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -19,11 +19,11 @@ public class GameManager {
     private Quiz quiz;
     private String userName;
     private int score = 0;
-    private Map<Page, Boolean> result = new HashMap<>();
+    private final Map<Page, Boolean> result = new HashMap<>();
     private int currentIndex = 0;
     private Page currentPage;
     private Question currentQuestion;
-    private List<GameObserver> observers = new ArrayList<>();
+    private final List<GameObserver> observers = new ArrayList<>();
     private Path path;
 
     public Path getPath() {
@@ -48,10 +48,10 @@ public class GameManager {
         return quiz;
     }
 
-    public void loadQuiz() {
+    public void loadQuiz(Window owner) {
         QuestionsReaderWriter reader = new QuestionsReaderWriter();
-        quiz = reader.ReadQuiz();
-        if(quiz == null) return;
+        quiz = reader.ReadQuiz(owner);
+        if (quiz == null) return;
         currentIndex = 0;
         currentPage = quiz.getPages().get(currentIndex);
         currentQuestion = currentPage.getElements().getFirst();
@@ -68,14 +68,14 @@ public class GameManager {
             currentIndex = 0;
             currentPage = null;
             currentQuestion = null;
-        }
-        catch (IOException e) {
-            throw new IllegalArgumentException("Failed to write Quiz file.",e);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Failed to write Quiz file.", e);
         }
 
 
     }
-    public void cleanQuiz(){
+
+    public void cleanQuiz() {
         quiz = null;
     }
 
@@ -114,7 +114,7 @@ public class GameManager {
     }
 
     public void processQuestion(ToggleGroup toggleGroup) {
-            if (currentPage != null) {
+        if (currentPage != null) {
             if (currentQuestion.isToggleNull(toggleGroup)) return;
             if (currentQuestion.isRight(toggleGroup)) increaseScore();
             addResult(currentPage, currentQuestion.isRight(toggleGroup));
@@ -122,8 +122,8 @@ public class GameManager {
         }
     }
 
-    public void processQuestionWithNull(){
-        if (currentPage != null){
+    public void processQuestionWithNull() {
+        if (currentPage != null) {
             getNextPage();
         }
     }

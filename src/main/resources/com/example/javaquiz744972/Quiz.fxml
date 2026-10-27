@@ -15,6 +15,7 @@
       xmlns="http://javafx.com/javafx/21.0.6"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.javaquiz744972.controllers.QuizController"
+      stylesheets="css/style.css"
       fx:id="mainbox">
 
     <children>
@@ -28,7 +29,7 @@
                 <Font size="24.0"/>
             </font>
         </Label>
-        <Label fx:id="error" />
+        <Label fx:id="error" styleClass="red" />
         <Button text="Upload your Quiz" onAction="#loadQuiz"/>
     </children>
 

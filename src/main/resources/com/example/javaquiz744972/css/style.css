@@ -12,3 +12,6 @@
     -fx-text-fill: #333333;
 }
 
+.red{
+    -fx-text-fill: red;
+}

@@ -32,8 +32,10 @@ public class QuizController implements GameObserver {
 
     public void loadQuiz(ActionEvent actionEvent) {
         try {
-            manager.loadQuiz();
+            manager.loadQuiz(mainbox.getScene().getWindow());
             if (GameManager.getInstance().getQuiz() == null) return;
+
+
             getNameUI();
         } catch (Exception e) {
             error.setText(e.getMessage());
@@ -42,7 +44,10 @@ public class QuizController implements GameObserver {
     }
 
     private void getNameUI() {
+        error.setText("");
         mainbox.getChildren().clear();
+        Label label = new Label("Enter your name:");
+        label.getStyleClass().add("questionName");
         TextField nameField = new TextField();
         if (manager.getUserName() != null) {
             nameField.setText(manager.getUserName());
@@ -67,7 +72,7 @@ public class QuizController implements GameObserver {
                 error.setText(e.getMessage());
             }
         });
-        mainbox.getChildren().addAll(nameField, error, startquiz);
+        mainbox.getChildren().addAll(label, nameField, error, startquiz);
     }
 
     private void startQuiz() throws IOException {
